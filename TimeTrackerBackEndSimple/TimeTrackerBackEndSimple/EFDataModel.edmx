@@ -1,0 +1,525 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TimeTrackerDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ActivityBlocks&#x9;">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="TaskId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Rate" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="TaskId" Type="int" Nullable="false" />
+          <Property Name="DateTimeLastModify" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Projects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Owner" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="AssignedUserId" Type="int" />
+          <Property Name="ProjectId" Type="int" Nullable="false" />
+          <Property Name="PreviousTaskId" Type="int" />
+          <Property Name="NextTaskId" Type="int" />
+          <Property Name="TrackedTime" Type="real" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SecondName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ActivityBlocks&#x9;_Tasks">
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="1" />
+          <End Role="ActivityBlocks&#x9;" Type="Self.ActivityBlocks&#x9;" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ActivityBlocks&#x9;">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActivityBlocks&#x9;_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="ActivityBlocks&#x9;" Type="Self.ActivityBlocks&#x9;" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ActivityBlocks&#x9;">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_Tasks">
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projects_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Projects" Type="Self.Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="Owner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_Tasks">
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="0..1" />
+          <End Role="Tasks1" Type="Self.Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks1">
+              <PropertyRef Name="PreviousTaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_Tasks1">
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="0..1" />
+          <End Role="Tasks1" Type="Self.Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks1">
+              <PropertyRef Name="NextTaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="AssignedUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TimeTrackerDBModelStoreContainer">
+          <EntitySet Name="ActivityBlocks&#x9;" EntityType="Self.ActivityBlocks&#x9;" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ActivityBlocks&#x9;_Tasks" Association="Self.FK_ActivityBlocks&#x9;_Tasks">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="ActivityBlocks&#x9;" EntitySet="ActivityBlocks&#x9;" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActivityBlocks&#x9;_Users" Association="Self.FK_ActivityBlocks&#x9;_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ActivityBlocks&#x9;" EntitySet="ActivityBlocks&#x9;" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_Tasks" Association="Self.FK_Comments_Tasks">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_Users" Association="Self.FK_Comments_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projects_Users" Association="Self.FK_Projects_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_Projects" Association="Self.FK_Tasks_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_Tasks" Association="Self.FK_Tasks_Tasks">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="Tasks1" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_Tasks1" Association="Self.FK_Tasks_Tasks1">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="Tasks1" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_Users" Association="Self.FK_Tasks_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TimeTrackerDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="DateTimeLastModify" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Task" Relationship="Self.FK_Comments_Tasks" FromRole="Comments" ToRole="Tasks" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Comments_Users" FromRole="Comments" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Owner" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Projects_Users" FromRole="Projects" ToRole="Users" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_Projects" FromRole="Projects" ToRole="Tasks" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AssignedUserId" Type="Int32" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="PreviousTaskId" Type="Int32" />
+          <Property Name="NextTaskId" Type="Int32" />
+          <Property Name="TrackedTime" Type="Single" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Tasks" FromRole="Tasks" ToRole="Comments" />
+          <NavigationProperty Name="Project" Relationship="Self.FK_Tasks_Projects" FromRole="Tasks" ToRole="Projects" />
+          <NavigationProperty Name="Tasks1" Relationship="Self.FK_Tasks_Tasks" FromRole="Tasks" ToRole="Tasks1" />
+          <NavigationProperty Name="Task1" Relationship="Self.FK_Tasks_Tasks" FromRole="Tasks1" ToRole="Tasks" />
+          <NavigationProperty Name="Tasks11" Relationship="Self.FK_Tasks_Tasks1" FromRole="Tasks" ToRole="Tasks1" />
+          <NavigationProperty Name="Task2" Relationship="Self.FK_Tasks_Tasks1" FromRole="Tasks1" ToRole="Tasks" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Tasks_Users" FromRole="Tasks" ToRole="Users" />
+          <NavigationProperty Name="ActivityBlocks_" Relationship="TimeTrackerDBModel.FK_ActivityBlocks__Tasks" FromRole="Task" ToRole="ActivityBlocks_" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SecondName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Users" FromRole="Users" ToRole="Comments" />
+          <NavigationProperty Name="Projects" Relationship="Self.FK_Projects_Users" FromRole="Users" ToRole="Projects" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_Users" FromRole="Users" ToRole="Tasks" />
+          <NavigationProperty Name="ActivityBlocks_" Relationship="TimeTrackerDBModel.FK_ActivityBlocks__Users" FromRole="User" ToRole="ActivityBlocks_" />
+        </EntityType>
+        <Association Name="FK_Comments_Tasks">
+          <End Role="Tasks" Type="Self.Task" Multiplicity="1" />
+          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projects_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Projects" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="Owner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_Projects">
+          <End Role="Projects" Type="Self.Project" Multiplicity="1" />
+          <End Role="Tasks" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_Tasks">
+          <End Role="Tasks" Type="Self.Task" Multiplicity="0..1" />
+          <End Role="Tasks1" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks1">
+              <PropertyRef Name="PreviousTaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_Tasks1">
+          <End Role="Tasks" Type="Self.Task" Multiplicity="0..1" />
+          <End Role="Tasks1" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks1">
+              <PropertyRef Name="NextTaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Tasks" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="AssignedUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TimeTrackerDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="Projects" EntityType="Self.Project" />
+          <EntitySet Name="Tasks" EntityType="Self.Task" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Comments_Tasks" Association="Self.FK_Comments_Tasks">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_Users" Association="Self.FK_Comments_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projects_Users" Association="Self.FK_Projects_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_Projects" Association="Self.FK_Tasks_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_Tasks" Association="Self.FK_Tasks_Tasks">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="Tasks1" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_Tasks1" Association="Self.FK_Tasks_Tasks1">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="Tasks1" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_Users" Association="Self.FK_Tasks_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <EntitySet Name="ActivityBlocks_" EntityType="TimeTrackerDBModel.ActivityBlocks" />
+          <AssociationSet Name="FK_ActivityBlocks__Tasks" Association="TimeTrackerDBModel.FK_ActivityBlocks__Tasks">
+            <End Role="Task" EntitySet="Tasks" />
+            <End Role="ActivityBlocks_" EntitySet="ActivityBlocks_" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActivityBlocks__Users" Association="TimeTrackerDBModel.FK_ActivityBlocks__Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ActivityBlocks_" EntitySet="ActivityBlocks_" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ActivityBlocks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Rate" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Task" Relationship="TimeTrackerDBModel.FK_ActivityBlocks__Tasks" FromRole="ActivityBlocks_" ToRole="Task" />
+          <NavigationProperty Name="User" Relationship="TimeTrackerDBModel.FK_ActivityBlocks__Users" FromRole="ActivityBlocks_" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_ActivityBlocks__Tasks">
+          <End Type="TimeTrackerDBModel.Task" Role="Task" Multiplicity="1" />
+          <End Type="TimeTrackerDBModel.ActivityBlocks" Role="ActivityBlocks_" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ActivityBlocks_">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActivityBlocks__Users">
+          <End Type="TimeTrackerDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="TimeTrackerDBModel.ActivityBlocks" Role="ActivityBlocks_" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ActivityBlocks_">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TimeTrackerDBModelStoreContainer" CdmEntityContainer="TimeTrackerDBEntities">
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="TimeTrackerDBModel.Comment">
+              <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="DateTimeLastModify" ColumnName="DateTimeLastModify" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="TimeTrackerDBModel.Project">
+              <MappingFragment StoreEntitySet="Projects">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tasks">
+            <EntityTypeMapping TypeName="TimeTrackerDBModel.Task">
+              <MappingFragment StoreEntitySet="Tasks">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="AssignedUserId" ColumnName="AssignedUserId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="PreviousTaskId" ColumnName="PreviousTaskId" />
+                <ScalarProperty Name="NextTaskId" ColumnName="NextTaskId" />
+                <ScalarProperty Name="TrackedTime" ColumnName="TrackedTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="TimeTrackerDBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="SecondName" ColumnName="SecondName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActivityBlocks_">
+            <EntityTypeMapping TypeName="TimeTrackerDBModel.ActivityBlocks">
+              <MappingFragment StoreEntitySet="ActivityBlocks&#x9;">
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

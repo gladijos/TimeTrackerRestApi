@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TimeTrackerBackEndSimple
+namespace TimeTrackerBackEndSimple.Models
 {
     using System;
     using System.Collections.Generic;
@@ -24,9 +24,11 @@ namespace TimeTrackerBackEndSimple
         public string Name { get; set; }
         public string Description { get; set; }
         public int Owner { get; set; }
+        public Nullable<int> AssignedUser { get; set; }
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Task> Tasks { get; set; }
+        public virtual User User1 { get; set; }
     }
 }

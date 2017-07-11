@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TimeTrackerBackEndSimple
+namespace TimeTrackerBackEndSimple.Models
 {
     using System;
     using System.Collections.Generic;
@@ -19,22 +19,26 @@ namespace TimeTrackerBackEndSimple
         {
             this.Comments = new HashSet<Comment>();
             this.Projects = new HashSet<Project>();
-            this.Tasks = new HashSet<Task>();
-            this.ActivityBlocks_ = new HashSet<ActivityBlocks>();
+            this.ActivityBlocks = new HashSet<ActivityBlocks>();
+            this.Projects1 = new HashSet<Project>();
         }
     
         public int Id { get; set; }
-        public string Login { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
+        public string Password { get; set; }
+        public int RoleId { get; set; }
+        public string UserName { get; set; }
+        public string Patronymic { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Project> Projects { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Task> Tasks { get; set; }
+        public virtual ICollection<ActivityBlocks> ActivityBlocks { get; set; }
+        public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ActivityBlocks> ActivityBlocks_ { get; set; }
+        public virtual ICollection<Project> Projects1 { get; set; }
     }
 }

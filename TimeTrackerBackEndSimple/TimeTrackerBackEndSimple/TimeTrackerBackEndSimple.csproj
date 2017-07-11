@@ -93,39 +93,59 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="EFDataModel.Context.tt">
+    <Content Include="Models\EFDataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EFDataModel.edmx</DependentUpon>
       <LastGenOutput>EFDataModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="EFDataModel.tt">
+    <Content Include="Models\EFDataModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EFDataModel.edmx</DependentUpon>
       <LastGenOutput>EFDataModel.cs</LastGenOutput>
     </Content>
     <Content Include="Global.asax" />
+    <Content Include="task.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActivityBlocks.cs">
+    <Compile Include="Models\ActivityBlocks.cs">
       <DependentUpon>EFDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Comment.cs">
+    <Compile Include="AuthorizationService\BasicAuthenticationAttribute.cs" />
+    <Compile Include="Models\Comment.cs">
       <DependentUpon>EFDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Project.cs">
+      <DependentUpon>EFDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Role.cs">
+      <DependentUpon>EFDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Task.cs">
+      <DependentUpon>EFDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>EFDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\ActivityBlocksController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
+    <Compile Include="Controllers\ProjectsController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\TasksController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\WebApiController.cs" />
-    <Compile Include="EFDataModel.Context.cs">
+    <Compile Include="Models\EFDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EFDataModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="EFDataModel.cs">
+    <Compile Include="Models\EFDataModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EFDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="EFDataModel.Designer.cs">
+    <Compile Include="Models\EFDataModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EFDataModel.edmx</DependentUpon>
@@ -133,24 +153,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Project.cs">
-      <DependentUpon>EFDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Task.cs">
-      <DependentUpon>EFDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="User.cs">
-      <DependentUpon>EFDataModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="AuthorizationService\UserSecurity.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <EntityDeploy Include="EFDataModel.edmx">
+    <EntityDeploy Include="Models\EFDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>EFDataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="EFDataModel.edmx.diagram">
+    <Content Include="Models\EFDataModel.edmx.diagram">
       <DependentUpon>EFDataModel.edmx</DependentUpon>
     </Content>
     <None Include="Web.Debug.config">
@@ -162,7 +174,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

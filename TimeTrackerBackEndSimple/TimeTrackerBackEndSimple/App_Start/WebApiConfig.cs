@@ -19,6 +19,7 @@ namespace TimeTrackerBackEndSimple
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            config.Filters.Add(new BasicAuthenticationAttribute());
             GlobalConfiguration.Configuration.Routes.MapHttpRoute("MyRoute", "{controller}");
         }
     }

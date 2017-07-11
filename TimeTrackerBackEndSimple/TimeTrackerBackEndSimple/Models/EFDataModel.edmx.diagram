@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="dd0354495f8349d59381bcac7c9a5383" Name="Diagram1" ZoomLevel="117">
+        <EntityTypeShape EntityType="TimeTrackerDBModel.Comment" Width="1.75" PointX="6.375" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimeTrackerDBModel.Project" Width="1.5" PointX="6.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimeTrackerDBModel.Task" Width="1.5" PointX="8.375" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimeTrackerDBModel.User" Width="1.5" PointX="4.5" PointY="3.625" IsExpanded="true" />
+        <AssociationConnector Association="TimeTrackerDBModel.FK_Comments_Tasks" ManuallyRouted="false" />
+        <AssociationConnector Association="TimeTrackerDBModel.FK_Comments_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="TimeTrackerDBModel.FK_Projects_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="TimeTrackerDBModel.FK_Tasks_Projects" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TimeTrackerDBModel.ActivityBlocks" Width="1.5" PointX="6.5" PointY="8.25" />
+        <AssociationConnector Association="TimeTrackerDBModel.FK_ActivityBlocks_Tasks" />
+        <AssociationConnector Association="TimeTrackerDBModel.FK_ActivityBlocks_Users" />
+        <EntityTypeShape EntityType="TimeTrackerDBModel.Role" Width="1.5" PointX="3.875" PointY="7.625" />
+        <AssociationConnector Association="TimeTrackerDBModel.FK_Users_Roles" />
+        <AssociationConnector Association="TimeTrackerDBModel.FK_Projects_Users1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

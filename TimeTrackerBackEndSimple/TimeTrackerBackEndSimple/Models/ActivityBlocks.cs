@@ -7,19 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TimeTrackerBackEndSimple
+namespace TimeTrackerBackEndSimple.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Comment
+    public partial class ActivityBlocks
     {
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string Text { get; set; }
-        public int UserId { get; set; }
+        public System.DateTime StartTime { get; set; }
+        public System.DateTime EndTime { get; set; }
         public int TaskId { get; set; }
-        public System.DateTime DateTimeLastModify { get; set; }
+        public int UserId { get; set; }
+        public double Rate { get; set; }
     
         public virtual Task Task { get; set; }
         public virtual User User { get; set; }

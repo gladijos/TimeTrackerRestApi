@@ -7,21 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TimeTrackerBackEndSimple
+namespace TimeTrackerBackEndSimple.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class ActivityBlocks
+    public partial class Role
     {
-        public int Id { get; set; }
-        public System.DateTime StartTime { get; set; }
-        public System.DateTime EndTime { get; set; }
-        public int TaskId { get; set; }
-        public int UserId { get; set; }
-        public double Rate { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Role()
+        {
+            this.Users = new HashSet<User>();
+        }
     
-        public virtual Task Task { get; set; }
-        public virtual User User { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> Users { get; set; }
     }
 }

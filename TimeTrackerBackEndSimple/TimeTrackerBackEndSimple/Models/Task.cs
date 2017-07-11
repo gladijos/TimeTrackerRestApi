@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TimeTrackerBackEndSimple
+namespace TimeTrackerBackEndSimple.Models
 {
     using System;
     using System.Collections.Generic;
@@ -18,31 +18,18 @@ namespace TimeTrackerBackEndSimple
         public Task()
         {
             this.Comments = new HashSet<Comment>();
-            this.Tasks1 = new HashSet<Task>();
-            this.Tasks11 = new HashSet<Task>();
-            this.ActivityBlocks_ = new HashSet<ActivityBlocks>();
+            this.ActivityBlocks = new HashSet<ActivityBlocks>();
         }
     
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public Nullable<int> AssignedUserId { get; set; }
         public int ProjectId { get; set; }
-        public Nullable<int> PreviousTaskId { get; set; }
-        public Nullable<int> NextTaskId { get; set; }
-        public Nullable<float> TrackedTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual Project Project { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Task> Tasks1 { get; set; }
-        public virtual Task Task1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Task> Tasks11 { get; set; }
-        public virtual Task Task2 { get; set; }
-        public virtual User User { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ActivityBlocks> ActivityBlocks_ { get; set; }
+        public virtual ICollection<ActivityBlocks> ActivityBlocks { get; set; }
     }
 }
